@@ -1,6 +1,6 @@
 import { Box, Button, Flex, Image, useDisclosure } from "@chakra-ui/react";
-import logo from "../assets/logo.png";
-import { AuthModal, SearchBar } from "./";
+import { AuthModal, SearchBar } from "..";
+import logo from "../../assets/logo.png";
 
 const NavBar = () => {
 	const { isOpen, onOpen, onClose } = useDisclosure();
@@ -18,6 +18,7 @@ const NavBar = () => {
 				>
 					Log in
 				</Button>
+
 				<AuthModal isOpen={isOpen} onClose={onClose} />
 			</Flex>
 		</Box>
