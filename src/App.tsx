@@ -1,7 +1,11 @@
-import { Text } from "@chakra-ui/react";
+import { NavBar } from "./components";
 
 function App() {
-	return <Text color="red">App</Text>;
+	return (
+		<>
+			<NavBar />
+		</>
+	);
 }
 
 export default App;
