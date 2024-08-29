@@ -1,5 +1,7 @@
+import { Text } from "@chakra-ui/react";
+
 function App() {
-	return <div>App</div>;
+	return <Text color="red">App</Text>;
 }
 
 export default App;
