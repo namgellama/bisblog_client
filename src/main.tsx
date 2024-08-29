@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Layout } from "./components";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const router = createBrowserRouter([
 	{
@@ -26,6 +27,7 @@ createRoot(document.getElementById("root")!).render(
 			<ChakraProvider>
 				<RouterProvider router={router} />
 			</ChakraProvider>
+			<ReactQueryDevtools />
 		</QueryClientProvider>
 	</StrictMode>
 );

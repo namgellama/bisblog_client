@@ -10,12 +10,13 @@ import {
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { z } from "zod";
-import axios from "axios";
-import { BASE_URL, LOGIN_URL } from "../constants";
+import { LOGIN_URL } from "../constants";
 import { LoginResponseDTO } from "../interfaces";
+import { useAuthStore } from "../stores/authStore";
 
 const schema = z.object({
 	emailOrUsername: z.string().min(1, "Email or username is required."),
@@ -34,19 +35,26 @@ const AuthForm = () => {
 		resolver: zodResolver(schema),
 	});
 
+	const setUser = useAuthStore((state) => state.setUser);
+
 	const { mutateAsync: loginMutation } = useMutation<
 		LoginResponseDTO,
 		Error,
 		FormFields
 	>({
-		mutationFn: (data) => axios.post(LOGIN_URL, data),
+		mutationFn: (data) =>
+			axios.post(LOGIN_URL, data).then((res) => res.data),
+		onSuccess: (data) => {
+			setUser(data);
+		},
+		onError: (error) => {
+			setError("root", {
+				message: error.message,
+			});
+		},
 	});
-
 	const onSubmit: SubmitHandler<FormFields> = async (data) => {
-		try {
-			const result = await loginMutation(data);
-			console.log(result);
-		} catch (error) {}
+		await loginMutation(data);
 	};
 
 	return (
